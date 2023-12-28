@@ -1,0 +1,17 @@
+diff --git a/Makefile b/Makefile
+index d01ac0557..6f64d045f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -407,9 +407,9 @@ endif
+ COMMONFLAGS += -DHAVE_CONFIG_H -MMD -D__LIBRETRO__
+ 
+ # VFS
+-ifneq ($(NO_LIBRETRO_VFS), 1)
+-   COMMONFLAGS += -DUSE_LIBRETRO_VFS
+-endif
++#ifneq ($(NO_LIBRETRO_VFS), 1)
++#   COMMONFLAGS += -DUSE_LIBRETRO_VFS
++#endif
+ 
+ COMMONFLAGS += -DCORE_NAME=\"$(EMUTYPE)\"
+ include Makefile.common

@@ -1,0 +1,17 @@
+diff --git a/Makefile b/Makefile
+index 605837a..9207f90 100644
+--- a/Makefile
++++ b/Makefile
+@@ -312,9 +312,9 @@ HAVE_MPEG2 = 1
+ CFLAGS += -std=gnu99 -DINLINE="inline" -D__LIBRETRO__ -MMD
+ 
+ # VFS
+-ifneq ($(NO_LIBRETRO_VFS), 1)
+-    CFLAGS += -DUSE_LIBRETRO_VFS
+-endif
++#ifneq ($(NO_LIBRETRO_VFS), 1)
++#    CFLAGS += -DUSE_LIBRETRO_VFS
++#endif
+ 
+ CXXFLAGS += -DUAE -MMD
+ 
