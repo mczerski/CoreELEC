@@ -1,0 +1,11 @@
+[Unit]
+Description=Amlogic DVB module loader
+ConditionPathExists=/proc/device-tree/demux/
+After=kernel-overlays.service
+
+[Service]
+Type=oneshot
+ExecStart=-/bin/sh -c "[ -f '/proc/device-tree/demux/status' -a $(tr -d '\\0' < /proc/device-tree/demux/status) = "okay" ] && /sbin/modprobe dvb_demux"
+
+[Install]
+WantedBy=basic.target
