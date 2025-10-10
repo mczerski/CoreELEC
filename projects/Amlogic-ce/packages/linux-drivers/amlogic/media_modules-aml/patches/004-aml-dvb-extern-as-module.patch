@@ -1,0 +1,51 @@
+diff --git a/drivers/stream_input/parser/hw_demux/aml_dvb.c b/drivers/stream_input/parser/hw_demux/aml_dvb.c
+index 4e1549c0..4d5e8ab2 100644
+--- a/drivers/stream_input/parser/hw_demux/aml_dvb.c
++++ b/drivers/stream_input/parser/hw_demux/aml_dvb.c
+@@ -2141,7 +2141,7 @@ static struct class aml_stb_class = {
+ static int aml_dvb_probe(struct platform_device *pdev)
+ {
+ 	struct aml_dvb *advb;
+-	int i, ret = 0;
++	int i, ts, ret = 0;
+ 	struct devio_aml_platform_data *pd_dvb;
+ 
+ 	pr_inf("probe amlogic dvb driver [%s]\n", DVB_VERSION);
+@@ -2370,6 +2370,17 @@ static int aml_dvb_probe(struct platform_device *pdev)
+ 		ret = aml_dvb_asyncfifo_init(advb, &advb->asyncfifo[i], i);
+ 		if (ret < 0)
+ 			goto error;
++
++		aml_asyncfifo_hw_set_source(&advb->asyncfifo[i], AM_DMX_0 + min(i, advb->async_fifo_total_count));
++	}
++
++	/* preselect ts inputs to DMX, start at DMX0 */
++	for (ts = 0, i = 0; i < advb->ts_in_total_count; i++) {
++		if (advb->ts[i].mode == AM_TS_DISABLE)
++			continue;
++		aml_dmx_hw_set_source(advb->dmx[ts].dmxdev.demux, DMX_SOURCE_FRONT0 + i);
++		aml_dmx_hw_set_dump_ts_select(aml_dvb_device.dmx[ts].dmxdev.demux, 1);
++		ts++;
+ 	}
+ 
+ 	aml_regist_dmx_class();
+@@ -2386,7 +2397,8 @@ static int aml_dvb_probe(struct platform_device *pdev)
+ 	tsdemux_set_ops(NULL);
+ #endif
+ 
+-#if (defined CONFIG_AMLOGIC_DVB_EXTERN)
++#if (defined CONFIG_AMLOGIC_DVB_EXTERN ||\
++		defined CONFIG_AMLOGIC_DVB_EXTERN_MODULE)
+ 	ret = dvb_extern_register_frontend(&advb->dvb_adapter);
+ 	if (ret) {
+ 		pr_error("aml register dvb frontend failed\n");
+@@ -2423,7 +2435,8 @@ static int aml_dvb_remove(struct platform_device *pdev)
+ 
+ 	pr_inf("[dmx_kpi] %s Enter.\n", __func__);
+ 
+-#if (defined CONFIG_AMLOGIC_DVB_EXTERN)
++#if (defined CONFIG_AMLOGIC_DVB_EXTERN ||\
++		defined CONFIG_AMLOGIC_DVB_EXTERN_MODULE)
+ 	dvb_extern_unregister_frontend();
+ #endif
+ 
