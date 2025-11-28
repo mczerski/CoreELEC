@@ -1,0 +1,69 @@
+diff --git a/driver/controllers/fd628.c b/driver/controllers/fd628.c
+index 463c97f..bb79506 100644
+--- a/driver/controllers/fd628.c
++++ b/driver/controllers/fd628.c
+@@ -306,6 +306,38 @@ static size_t fd628_write_data(const unsigned char *_data, size_t length)
+ 		data[0] |= dev->status_led_mask;
+ 	else
+ 		data[0] |= (dev->status_led_mask & ~dtb->led_dots[LED_DOT_SEC]);
++    if (data[0] & ledDots[LED_DOT_SEC]) {
++        data[0] = 0x30;
++    }
++    else {
++        data[0] = 0;
++    }
++    if (length > 4) {
++        if (dev->status_led_mask & dtb->led_dots[LED_DOT5_USB]) {
++            data[1] |= 0x40;
++        }
++        else {
++            data[1] &= 0xbf;
++        }
++        if (dev->status_led_mask & dtb->led_dots[LED_DOT5_CARD]) {
++            data[2] |= 0x40;
++        }
++        else {
++            data[2] &= 0xbf;
++        }
++        if (dev->status_led_mask & (dtb->led_dots[LED_DOT5_WIFIHI] | dtb->led_dots[LED_DOT5_WIFILO])) {
++            data[3] |= 0x40;
++        }
++        else {
++            data[3] &= 0xbf;
++        }
++        if (dev->status_led_mask & dtb->led_dots[LED_DOT5_ETH]) {
++            data[4] |= 0x40;
++        }
++        else {
++            data[4] &= 0xbf;
++        }
++    }
+ 
+ 	switch (dtb->display.type) {
+ 	case DISPLAY_TYPE_5D_7S_NORMAL:
+diff --git a/driver/glyphs.h b/driver/glyphs.h
+index 2e3badf..a71410e 100644
+--- a/driver/glyphs.h
++++ b/driver/glyphs.h
+@@ -80,14 +80,14 @@ static const led_bitmap LED_decode_tab1[] = {
+ 	{'_', a1}, {'-', g1}, {' ', 0}, { 0xB0, c1|d1|e1|g1 }
+ };
+ 
+-#define a2 0x08
+-#define b2 0x10
+-#define c2 0x20
++#define a2 0x04
++#define b2 0x08
++#define c2 0x10
+ #define d2 0x01
+-#define e2 0x02
+-#define f2 0x04
+-#define g2 0x40
+-#define p2 0x80
++#define e2 0x80
++#define f2 0x02
++#define g2 0x20
++#define p2 0x40
+ 
+ static const led_bitmap LED_decode_tab2[] = {
+ /*
