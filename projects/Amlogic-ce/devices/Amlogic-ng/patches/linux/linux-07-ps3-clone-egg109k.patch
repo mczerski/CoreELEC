@@ -1,0 +1,37 @@
+--- a/drivers/hid/hid-sony.c	2026-03-15 13:15:32.651967437 +0100
++++ b/drivers/hid/hid-sony.c	2026-01-01 16:21:07.000000000 +0100
+@@ -472,7 +472,7 @@
+ 
+ #define DS4_FEATURE_REPORT_0x02_SIZE 37
+ #define DS4_FEATURE_REPORT_0x05_SIZE 41
+-#define DS4_FEATURE_REPORT_0x81_SIZE 7
++#define DS4_FEATURE_REPORT_0x12_SIZE 16
+ #define DS4_INPUT_REPORT_0x11_SIZE 78
+ #define DS4_OUTPUT_REPORT_0x05_SIZE 32
+ #define DS4_OUTPUT_REPORT_0x11_SIZE 78
+@@ -2387,7 +2387,7 @@
+ 			return 0;
+ 		}
+ 	} else if (sc->quirks & (DUALSHOCK4_CONTROLLER_USB | DUALSHOCK4_DONGLE)) {
+-		buf = kmalloc(DS4_FEATURE_REPORT_0x81_SIZE, GFP_KERNEL);
++		buf = kmalloc(DS4_FEATURE_REPORT_0x12_SIZE, GFP_KERNEL);
+ 		if (!buf)
+ 			return -ENOMEM;
+ 
+@@ -2396,12 +2396,12 @@
+ 		 * retrieved with feature report 0x81. The address begins at
+ 		 * offset 1.
+ 		 */
+-		ret = hid_hw_raw_request(sc->hdev, 0x81, buf,
+-				DS4_FEATURE_REPORT_0x81_SIZE, HID_FEATURE_REPORT,
++		ret = hid_hw_raw_request(sc->hdev, 0x12, buf,
++				DS4_FEATURE_REPORT_0x12_SIZE, HID_FEATURE_REPORT,
+ 				HID_REQ_GET_REPORT);
+ 
+-		if (ret != DS4_FEATURE_REPORT_0x81_SIZE) {
+-			hid_err(sc->hdev, "failed to retrieve feature report 0x81 with the DualShock 4 MAC address\n");
++		if (ret != DS4_FEATURE_REPORT_0x12_SIZE) {
++			hid_err(sc->hdev, "failed to retrieve feature report 0x12 with the DualShock 4 MAC address\n");
+ 			ret = ret < 0 ? ret : -EINVAL;
+ 			goto out_free;
+ 		}
