@@ -1,0 +1,21 @@
+diff --git a/game.libretro.uae/resources/buttonmap.xml b/game.libretro.uae/resources/buttonmap.xml
+index 1e802c7..a2ca57a 100644
+--- a/game.libretro.uae/resources/buttonmap.xml
++++ b/game.libretro.uae/resources/buttonmap.xml
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <buttonmap version="2">
+-  <controller id="game.controller.amiga.cd32" type="RETRO_DEVICE_ANALOG" subclass="1">
++  <controller id="game.controller.amiga.cd32" type="RETRO_DEVICE_JOYPAD">
+     <feature name="up" mapto="RETRO_DEVICE_ID_JOYPAD_UP"/>
+     <feature name="down" mapto="RETRO_DEVICE_ID_JOYPAD_DOWN"/>
+     <feature name="right" mapto="RETRO_DEVICE_ID_JOYPAD_RIGHT"/>
+@@ -20,7 +20,7 @@
+     <feature name="r3" mapto="RETRO_DEVICE_ID_JOYPAD_R3"/>
+     -->
+   </controller>
+-  <controller id="game.controller.default" type="RETRO_DEVICE_ANALOG" subclass="2">
++  <controller id="game.controller.default" type="RETRO_DEVICE_JOYPAD">
+     <feature name="b" mapto="RETRO_DEVICE_ID_JOYPAD_A"/>
+     <feature name="a" mapto="RETRO_DEVICE_ID_JOYPAD_B"/>
+     <feature name="y" mapto="RETRO_DEVICE_ID_JOYPAD_X"/>
