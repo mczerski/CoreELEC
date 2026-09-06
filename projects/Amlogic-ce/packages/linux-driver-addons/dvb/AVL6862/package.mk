@@ -2,12 +2,12 @@
 # Copyright (C) 2024-present Team CoreELEC (https://coreelec.org)
 
 PKG_NAME="AVL6862"
-PKG_VERSION="2f1fce8c80e817517fe9b921244926f5660355f6"
+PKG_VERSION="83efb9f453afd1bf6e50c81defe430272699b488"
 PKG_SHA256=""
 PKG_REV="6"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/CoreELEC"
-PKG_URL="https://github.com/CoreELEC/media_tree_aml/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/mczerski/media_tree_aml/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain media_modules-aml"
 PKG_NEED_UNPACK="${LINUX_DEPENDS}"
 PKG_LONGDESC="AVL6862 driver for Amlogic DVB Frontend"
